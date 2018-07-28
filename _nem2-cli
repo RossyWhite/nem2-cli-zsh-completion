@@ -63,8 +63,8 @@ _nem2-cli() {
       profile)
         _values \
           '' \
-          'create[Configure an account]' \
-          'list[Configure an account]'
+          'create[Create an account]' \
+          'list[List accounts]'
         ;;
     esac
   fi
