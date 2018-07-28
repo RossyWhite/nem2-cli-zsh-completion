@@ -1,0 +1,71 @@
+#compdef nem2-cli
+
+_nem2-cli() {
+  if (( CURRENT == 2 )); then
+    _values \
+      '' \
+      'account[Fetch account information]' \
+      'blockchain[Fetch blockchain information]' \
+      'mosaic[Fetch mosaic information]' \
+      'namespace[Fetch namespace information]' \
+      'transaction[Send transactions]' \
+      'monitor[Monitor blocks, transactions and errors]' \
+      'profile[Profile management]'
+  else
+    case $words[CURRENT-1] in
+      account)
+        _values \
+          '' \
+          'aggregatebonded[Fetch aggregate bonded transactions from account]' \
+          'generate[Generate new accounts]' \
+          'incoming[Fetch incoming transactions from account]' \
+          'info[Fetch account info]' \
+          'outgoing[Fetch outgoing transactions from account]' \
+          'transactions[Fetch transactions from account]' \
+          'unconfirmed[Fetch unconfirmed transactions from account]'
+        ;;
+      blockchain)
+        _values \
+          '' \
+          'height[Blockchain height]' \
+          'score[Blockchain score]'
+        ;;
+      mosaic)
+        _values \
+          '' \
+          'info[Fetch Mosaic info]'
+        ;;
+      namespace)
+        _values \
+          '' \
+          'info[Fetch Mosaic info]'
+        ;;
+      transaction)
+        _values \
+          '' \
+          'cosign[Cosign an announce aggregate bonded transaction]' \
+          'info[Fetch Transaction info]' \
+          'mosaic[Mosaic creation transaction]' \
+          'namespace[Register namespace transaction]' \
+          'pullfunds[Create a pull transaction requesting xem to an account ]' \
+          'transfer[Send transfer transaction]'
+        ;;
+      monitor)
+        _values \
+          '' \
+          'aggregatebonded[Monitor aggregate bonded transactions added]' \
+          'block[Monitor new blocks]' \
+          'confirmed[Monitor confirmed transactions added]' \
+          'cosignature[Monitor cosignatures added]' \
+          'status[Monitor transaction status error]' \
+          'unconfirmed[Monitor unconfirmed transactions added]'
+        ;;
+      profile)
+        _values \
+          '' \
+          'create[Configure an account]' \
+          'list[Configure an account]'
+        ;;
+    esac
+  fi
+}
