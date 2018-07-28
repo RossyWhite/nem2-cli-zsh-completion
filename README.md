@@ -1,0 +1,1 @@
+# nem2-cli-zsh-completion
