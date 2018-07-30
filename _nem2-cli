@@ -1,71 +1,157 @@
 #compdef nem2-cli
 
-_nem2-cli() {
-  if (( CURRENT == 2 )); then
-    _values \
-      '' \
-      'account[Fetch account information]' \
-      'blockchain[Fetch blockchain information]' \
-      'mosaic[Fetch mosaic information]' \
-      'namespace[Fetch namespace information]' \
-      'transaction[Send transactions]' \
-      'monitor[Monitor blocks, transactions and errors]' \
-      'profile[Profile management]'
-  else
-    case $words[CURRENT-1] in
-      account)
-        _values \
-          '' \
-          'aggregatebonded[Fetch aggregate bonded transactions from account]' \
-          'generate[Generate new accounts]' \
-          'incoming[Fetch incoming transactions from account]' \
-          'info[Fetch account info]' \
-          'outgoing[Fetch outgoing transactions from account]' \
-          'transactions[Fetch transactions from account]' \
-          'unconfirmed[Fetch unconfirmed transactions from account]'
-        ;;
-      blockchain)
-        _values \
-          '' \
-          'height[Blockchain height]' \
-          'score[Blockchain score]'
-        ;;
-      mosaic)
-        _values \
-          '' \
-          'info[Fetch Mosaic info]'
-        ;;
-      namespace)
-        _values \
-          '' \
-          'info[Fetch Mosaic info]'
-        ;;
-      transaction)
-        _values \
-          '' \
-          'cosign[Cosign an announce aggregate bonded transaction]' \
-          'info[Fetch Transaction info]' \
-          'mosaic[Mosaic creation transaction]' \
-          'namespace[Register namespace transaction]' \
-          'pullfunds[Create a pull transaction requesting xem to an account ]' \
-          'transfer[Send transfer transaction]'
-        ;;
-      monitor)
-        _values \
-          '' \
-          'aggregatebonded[Monitor aggregate bonded transactions added]' \
-          'block[Monitor new blocks]' \
-          'confirmed[Monitor confirmed transactions added]' \
-          'cosignature[Monitor cosignatures added]' \
-          'status[Monitor transaction status error]' \
-          'unconfirmed[Monitor unconfirmed transactions added]'
-        ;;
-      profile)
-        _values \
-          '' \
-          'create[Create an account]' \
-          'list[List accounts]'
-        ;;
-    esac
-  fi
+__nem2-cli_commands() {
+  local -a _c
+  _c=(
+     'account:Fetch account information'
+     'blockchain:Fetch blockchain information'
+     'mosaic:Fetch mosaic information'
+     'namespace:Fetch namespace information'
+     'transaction:Send transactions'
+     'monitor:Monitor blocks, transactions and errors'
+     'profile:Profile management'
+  )
+  _describe -t commands Commands _c
 }
+
+__account_commands() {
+  local -a _c
+  _c=(
+      'aggregatebonded:Fetch aggregate bonded transactions from account'
+      'generate:Generate new accounts'
+      'incoming:Fetch incoming transactions from account'
+      'info:Fetch account info'
+      'outgoing:Fetch outgoing transactions from account'
+      'transactions:Fetch transactions from account'
+      'unconfirmed:Fetch unconfirmed transactions from account'
+    )
+  _describe -t commands Commands _c
+}
+
+__blockchain_commands() {
+  local -a _c
+  _c=(
+      'height:Blockchain height'
+      'score:Blockchain score'
+    )
+  _describe -t commands Commands _c
+}
+
+__mosaic_commands() {
+  local -a _c
+  _c=(
+      'info:Fetch Mosaic info'
+    )
+  _describe -t commands Commands _c
+}
+
+__namespace_commands() {
+  local -a _c
+  _c=(
+      'info:Fetch Mosaic info'
+    )
+  _describe -t commands Commands _c
+}
+
+__transaction_commands() {
+  local -a _c
+  _c=(
+      'cosign:Cosign an announce aggregate bonded transaction'
+      'info:Fetch Transaction info'
+      'mosaic:Mosaic creation transaction'
+      'namespace:Register namespace transaction'
+      'pullfunds:Create a pull transaction requesting xem to an account'
+      'transfer:Send transfer transaction'
+
+    )
+  _describe -t commands Commands _c
+}
+
+__monitor_commands() {
+  local -a _c
+  _c=(
+      'aggregatebonded:Monitor aggregate bonded transactions added'
+      'block:Monitor new blocks'
+      'confirmed:Monitor confirmed transactions added'
+      'cosignature:Monitor cosignatures added'
+      'status:Monitor transaction status error'
+      'unconfirmed:Monitor unconfirmed transactions added'
+
+    )
+  _describe -t commands Commands _c
+}
+
+__profile_commands() {
+  local -a _c
+  _c=(
+      'create:Create an account'
+      'list:List accounts'
+    )
+  _describe -t commands Commands _c
+}
+
+
+_nem2-cli() {
+  local context curcontext=$curcontext state line
+  declare -A opt_args
+  local ret=1
+
+  _arguments -C \
+    '1: :__nem2-cli_commands' \
+    '*:: :->args' \
+    && ret=0
+
+  case $state in
+      (args)
+        case $words[1] in
+          (account)
+            _arguments -C \
+              '1: :__account_commands' \
+              '*:: :->args' \
+              && ret=0
+            ;;
+          (blockchain)
+            _arguments -C \
+              '1: :__blockchain_commands' \
+              '*:: :->args' \
+              && ret=0
+            ;;
+          (mosaic)
+            _arguments -C \
+              '1: :__mosaic_commands' \
+              '*:: :->args' \
+              && ret=0
+            ;;
+          (namespace)
+            _arguments -C \
+              '1: :__namespace_commands' \
+              '*:: :->args' \
+              && ret=0
+            ;;
+          (transaction)
+            _arguments -C \
+              '1: :__transaction_commands' \
+              '*:: :->args' \
+              && ret=0
+            ;;
+          (monitor)
+            _arguments -C \
+              '1: :__monitor_commands' \
+              '*:: :->args' \
+              && ret=0
+            ;;
+          (profile)
+            _arguments -C \
+              '1: :__profile_commands' \
+              '*:: :->args' \
+              && ret=0
+            ;;
+        esac
+        ;;
+  esac
+
+  return ret
+}
+
+
+_nem2-cli "$@"
