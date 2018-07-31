@@ -99,8 +99,8 @@ _nem2-cli() {
   local ret=1
 
   default_opts=(
-    '(- *)'{-h,--help}'[show help]' \
-    '--profile[(optional) Select between your profiles, by providing a profile name]' \
+    '--help[show help]'
+    '--profile[(optional) Select between your profiles, by providing a profile name]'
   )
 
   _arguments -C \
@@ -366,7 +366,6 @@ _nem2-cli() {
                   (list)
                     _arguments -C \
                       '(-a --address)'{-a,--address}'[Account address]' \
-                      $default_opts \
                       && ret=0
                     ;;
                 esac
